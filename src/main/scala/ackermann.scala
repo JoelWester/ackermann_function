@@ -1,14 +1,18 @@
-class Ackermann {
+import scala.util.control.TailCalls._
+
+object Ackermann {
   //The Ackermann function
+  //TODO implement optimized tail recursion
   def Ackermann_function(m:Int, n:Int): Int = {
-    var ans: Int = 0
-    m match {
-      case 0 => ans = n+1
-      case _ => n match {
-        case 0 => ans = Ackermann_function(m-1, 1)
-        case _ => ans = Ackermann_function(m-1,Ackermann_function(m,n-1))
+    def helper(m: Int, n:Int): TailRec[Int] = {
+      if(m <= 0) {
+        done(n + 1)
+      } else if (n <= 0) {
+        helper(m-1, 1)
+      } else {
+        helper(m-1, helper(m, n-1).result)
       }
     }
-    ans
+    helper(m, n).result
   }
 }
