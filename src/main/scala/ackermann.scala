@@ -1,4 +1,4 @@
-import Array._
+import scala.collection.mutable
 
 object Ackermann {
 
@@ -7,34 +7,29 @@ object Ackermann {
    * increase computing speed.
    */
   //TODO optimize with dynamic programming
+  //Create hashmap
+  var cache:mutable.HashMap[String, BigInt] = new mutable.HashMap()
+  var actcall = BigInt(0)
+  var call = BigInt(0)
   //The Ackermann function
-  def Ackermann_function(m:Int, n:Int): Int = {
-    //create a matrix of dimensions m*n
-    var cache = ofDim[Int](m+1,n+1)
-    for (rows <- cache.indices) {
-      for (cols <- cache(0).indices) {
-        //All answers for A(0,n) are going to be n+1
-        if (rows == 0) {
-          cache(rows)(cols) = cols + 1
-        } else if (cols == 0){
-          //A(m-1,1)
-          cache(rows)(cols) = cache(rows-1)(1)
-        } else {
-          //If both rows and cols are greater than 0, then we have to use A(m-1,A(m,n-1))
-          val r = rows - 1
-          val c = cache(rows)(cols - 1)
-          var ans: Int = 0
-          if(r == 0) {
-            ans = c + 1
-          } else if (c <= n) {
-            ans = cache(rows-1)(cache(rows)(cols-1))
-          } else {
-            ans = (c-n)*r + cache(r)(n)
-          }
-          cache(m)(n) = ans
-        }
-      }
+  def Ackermann_function(m:BigInt, n:BigInt): BigInt = {
+
+    val key: String = m.toString()+"*"+n.toString()
+
+    if (cache.contains(key)) {
+      actcall = actcall.+(BigInt(1))
+      cache.remove(key).get
+    } else if (m.compare(BigInt(0)) == 0) {
+      n.+(1)
+    } else if (m.compare(BigInt(0))>0 & n.compare(BigInt(0)) == 0) {
+      call = call.+(1)
+      cache.put(key, Ackermann_function(m.-(1), BigInt(1)))
+      cache(key)
+    } else {
+      call = call.+(1)
+      call = call.+(1)
+      cache.put(key, Ackermann_function(m.-(1), Ackermann_function(m, n.-(1))))
+      cache(key)
     }
-    cache(m)(n)
    }
 }
