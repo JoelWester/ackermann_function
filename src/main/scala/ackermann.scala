@@ -1,4 +1,5 @@
 import scala.collection.mutable
+import scala.io.StdIn.readLine
 
 object Ackermann {
 
@@ -31,5 +32,16 @@ object Ackermann {
       cache.put(key, Ackermann_function(m.-(1), Ackermann_function(m, n.-(1))))
       cache(key)
     }
-   }
+  }
+
+  while(true) {
+    var m = BigInt(readLine())
+    printf("Enter m: ")
+
+    var n = BigInt(readLine())
+    println("Enter n: ")
+
+
+    println(s"A(${m},${n}) => ${Ackermann_function(m,n)}")
+  }
 }
