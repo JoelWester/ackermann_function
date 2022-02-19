@@ -1,7 +1,7 @@
 import scala.collection.mutable
 import scala.io.StdIn.readLine
 
-object Ackermann extends App {
+object Ackermann {
 
   /**Since scala uses up the stack quite quickly when doing recursion we have to be smart about what we compute.
    * By using a dynamic programming approach to define the Ackermann function we can both reduce the stack size and
@@ -22,8 +22,6 @@ object Ackermann extends App {
       cache.remove(key).get
     } else if (m.compare(BigInt(0)) == 0) {
       n.+(1)
-    } else if (m == 1) {
-      n.+(2)
     } else if (m.compare(BigInt(0))>0 & n.compare(BigInt(0)) == 0) {
       call = call.+(1)
       cache.put(key, Ackermann_function(m.-(1), BigInt(1)))
@@ -37,18 +35,13 @@ object Ackermann extends App {
   }
 
   while(true) {
-    print("Enter m: ")
     var m = BigInt(readLine())
-    print("Enter n: ")
+    printf("Enter m: ")
+
     var n = BigInt(readLine())
-    var result: Option[BigInt] = None
-    try {
-      var result = Some(Ackermann_function(m,n))
-      println(s"A(${m},${n}) => ${result.get}")
-    }
-    catch {
-      case e: StackOverflowError => println("Stack overflow")
-      case _: Throwable => println(s"Error: " + _)
-    }
+    println("Enter n: ")
+
+
+    println(s"A(${m},${n}) => ${Ackermann_function(m,n)}")
   }
 }
