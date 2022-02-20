@@ -1,3 +1,4 @@
+import scala.annotation.tailrec
 import scala.collection.mutable
 import scala.io.StdIn.readLine
 
@@ -7,7 +8,29 @@ object Ackermann extends App {
    * By using a dynamic programming approach to define the Ackermann function we can both reduce the stack size and
    * increase computing speed.
    */
+  /** By defining the function by TRS we reduce recursion depth */
   //TODO optimize with dynamic programming
+  //Exponentiation
+  def exp2(i:BigInt):BigInt = {
+    @ tailrec def go(n:BigInt, acc: BigInt): BigInt = { //Helper function for using tail recursion to collapse the exponent to a single number
+      if (n == 1) {
+        acc
+      } else {
+        go(n-1, acc*acc)
+      }
+    }
+    @ tailrec def go2(n:BigInt, acc: BigInt): BigInt = {  //Another helper function to solve the 2^n we get from the first one and help my sanity
+      if(n.compare(BigInt(0)) == 0) {
+        acc
+      } else {
+        go2(n-1,acc*2)
+      }
+    }
+
+    val step = go(i,2)
+    go2(step,1)
+  }
+  //TODO Power Tower https://en.wikipedia.org/wiki/Knuth%27s_up-arrow_notation#Writing_out_up-arrow_notation_in_terms_of_powers
   //Create hashmap
   var cache:mutable.HashMap[String, BigInt] = new mutable.HashMap()
   var actcall = BigInt(0)
