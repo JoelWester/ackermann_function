@@ -16,6 +16,7 @@ object Ackermann extends App {
       if (n == 1) {
         acc
       } else {
+        println(acc)
         go(n-1, acc*acc)
       }
     }
@@ -23,6 +24,7 @@ object Ackermann extends App {
       if(n.compare(BigInt(0)) == 0) {
         acc
       } else {
+        println(acc)
         go2(n-1,acc*2)
       }
     }
