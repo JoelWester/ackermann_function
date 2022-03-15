@@ -1,6 +1,9 @@
+import scala.annotation.tailrec
+import scala.concurrent.Future
 import scala.io.StdIn.readLine
 
 object Hyperoperation extends App{
+
   /** A hyperophyeration sequence is an infinite sequence of arithmetic operations that start from a unary operation(a[n]b v n = 0 => a[0]b = b+1)
    * and continue with addition(n=1), multiplication(n=2) and exponentiation(n=3) and so forth.
    */
